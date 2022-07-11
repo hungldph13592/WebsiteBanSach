@@ -1,0 +1,322 @@
+﻿@using PagedList;
+@*@using PagedList.Mvc;*@
+
+@model IPagedList<WebBanSach.Models.Sach>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Home page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <!--[if ie]><meta content='IE=8' http-equiv='X-UA-Compatible'/><![endif]-->
+    <!-- bootstrap -->
+    <link href="~/boostrap/bootstrap.min.css" rel="stylesheet">
+    <link href="~/boostrap/bootstrap-responsive.min.css" rel="stylesheet">
+
+    <link href="~/boostrap/bootstrappage.css" rel="stylesheet"  />
+
+    <!-- global styles -->
+    <link href="~/boostrap/flexslider.css" rel="stylesheet"  />
+    <link href="~/boostrap/main.css" rel="stylesheet"  />
+
+    <!-- scripts -->
+    <script src="~/js/jquery-1.7.2.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/superfish.jss"></script>
+    <script src="~/js/jquery.scrolltotop.js"></script>
+    <script src="~/js/jquery.fancybox.js"></script>
+</head>
+<body>
+    <div id="top-bar" class="container">
+        <div class="row">
+            <div class="span4">
+              
+                @using (@Html.BeginForm("TrangChu",  "Home",  FormMethod.Get))
+                {
+                    <p>
+                        Tìm kiếm tên sách : @Html.TextBox("NameBook",ViewBag.CurrentFilter as string)
+                        <input class="btn-info" type="submit" value="seach">
+                    </p>
+                }
+            </div>
+            <div class="span8">
+                <div class="account pull-right">
+                    <ul class="user-menu">
+                        
+                         
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="wrapper" class="container">
+        <section class="navbar main-menu">
+            <div class="navbar-inner main-menu">
+               
+                <nav id="menu" class="pull-right">
+                    <ul>
+                        @foreach (var TL in ViewBag.TheLoai)
+                        {
+                           <li><a href="@Url.Action("TheLoai","Home",new{idTl=@TL.ID_TheLoai})">@TL.TenTL</a></li>
+                        }
+                       
+                    </ul>
+                </nav>
+            </div>
+        </section>
+        <section class="homepage-slider" id="home-slider">
+            <div class="flexslider">
+                <ul class="slides">
+                    <li>
+                        <img src="~/img/bannerbook.jpg" alt="" />
+                    </li>
+                    <li>
+                        <img src="~/img/baner2.jpg" alt="" />
+                        <div class="intro">
+                            <h1>Mid season sale</h1>
+                            <p><span>Up to 50% Off</span></p>
+                            <p><span>On selected items online and in stores</span></p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+        
+        <section class="main-content">
+            <div class="row">
+                <div class="span12">
+                    <div class="row">
+                        <div class="span12">
+                            <h4 class="title">
+                                <span class="pull-left"><span class="text"><span class="line">Feature <strong>Products</strong></span></span></span>
+                                <span class="pull-right">
+                                    <a class="left button" href="#myCarousel" data-slide="prev"></a><a class="right button" href="#myCarousel" data-slide="next"></a>
+                                </span>
+                            </h4>
+                            <div id="myCarousel" class="myCarousel carousel slide">
+                                <div class="carousel-inner">
+                                    <div class="active item">
+
+                                        <ul class="thumbnails">
+                                            @foreach (var item in @Model)
+                                            {
+
+                                                <li class="span3">
+                                                    <div class="product-box">
+                                                        @if (@item.SoLuong > 0){
+                                                           
+                                                        }else
+                                                        {
+                                                             <h3 class="text text-danger">Hết hàng</h3> 
+                                                        }
+                                                        <span class="sale_tag"></span>
+                                                        <div class="product_title"><a href="#">@item.TenSach</a></div>
+                                                        <p><a href="@Url.Action("DetailBook","Home",new{id=@item.ID_Sach})"><img class="img-book" src="~/img/@item.HinhAnh" alt="" /></a></p>
+                                                
+                                                        <p class="price">@item.Gia.ToString("#,##0").Replace(',', '.') VNĐ </p>
+                                                    </div>
+                                                    </li>
+                                                
+
+                                                 
+                                            }
+                                        </ul>
+                                    </div>
+                                    <div class="item">
+                                        <ul class="thumbnails">
+                                            <li class="span3">
+                                                <div class="product-box">
+                                                    <p><a href="product_detail.html"><img src="themes/images/ladies/5.jpg" alt="" /></a></p>
+                                                    <a href="product_detail.html" class="title">Know exactly</a><br  />
+                                                    <a href="products.html" class="category">Quis nostrud</a>
+                                                    <p class="price">$22.30</p>
+                                                </div>
+                                            </li>
+                                            <li class="span3">
+                                                <div class="product-box">
+                                                    <p><a href="product_detail.html"><img src="themes/images/ladies/6.jpg" alt="" /></a></p>
+                                                    <a href="product_detail.html" class="title">Ut wisi enim ad</a><br  />
+                                                    <a href="products.html" class="category">Commodo consequat</a>
+                                                    <p class="price">$40.25</p>
+                                                </div>
+                                            </li>
+                                            <li class="span3">
+                                                <div class="product-box">
+                                                    <p><a href="product_detail.html"><img src="themes/images/ladies/7.jpg" alt="" /></a></p>
+                                                    <a href="product_detail.html" class="title">You think water</a><br  />
+                                                    <a href="products.html" class="category">World once</a>
+                                                    <p class="price">$10.45</p>
+                                                </div>
+                                            </li>
+                                            <li class="span3">
+                                                <div class="product-box">
+                                                    <p><a href="product_detail.html"><img src="themes/images/ladies/8.jpg" alt="" /></a></p>
+                                                    <a href="product_detail.html" class="title">Quis nostrud exerci</a><br  />
+                                                    <a href="products.html" class="category">Quis nostrud</a>
+                                                    <p class="price">$35.50</p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br  />
+                    <div class="row">
+                        <div class="span12">
+                            <h4 class="title">
+                                <span class="pull-left"><span class="text"><span class="line">Latest <strong>Products</strong></span></span></span>
+                                <span class="pull-right">
+                                    <a class="left button" href="#myCarousel-2" data-slide="prev"></a><a class="right button" href="#myCarousel-2" data-slide="next"></a>
+                                </span>
+                            </h4>
+                            <div id="myCarousel-2" class="myCarousel carousel slide">
+                                <div class="carousel-inner">
+                                    <div class="active item">
+                                        <ul class="thumbnails">
+                                            <li class="span3">
+                                                <div class="product-box">
+                                                    <span class="sale_tag"></span>
+                                                    <p><a href="product_detail.html"><img src="themes/images/cloth/bootstrap-women-ware2.jpg" alt="" /></a></p>
+                                                    <a href="product_detail.html" class="title">Ut wisi enim ad</a><br  />
+                                                    <a href="products.html" class="category">Commodo consequat</a>
+                                                    <p class="price">$25.50</p>
+                                                </div>
+                                            </li>
+                                            <li class="span3">
+                                                <div class="product-box">
+                                                    <p><a href="product_detail.html"><img src="themes/images/cloth/bootstrap-women-ware1.jpg" alt="" /></a></p>
+                                                    <a href="product_detail.html" class="title">Quis nostrud exerci tation</a><br  />
+                                                    <a href="products.html" class="category">Quis nostrud</a>
+                                                    <p class="price">$17.55</p>
+                                                </div>
+                                            </li>
+                                            <li class="span3">
+                                                <div class="product-box">
+                                                    <p><a href="product_detail.html"><img src="themes/images/cloth/bootstrap-women-ware6.jpg" alt="" /></a></p>
+                                                    <a href="product_detail.html" class="title">Know exactly turned</a><br  />
+                                                    <a href="products.html" class="category">Quis nostrud</a>
+                                                    <p class="price">$25.30</p>
+                                                </div>
+                                            </li>
+                                            <li class="span3">
+                                                <div class="product-box">
+                                                    <p><a href="product_detail.html"><img src="themes/images/cloth/bootstrap-women-ware5.jpg" alt="" /></a></p>
+                                                    <a href="product_detail.html" class="title">You think fast</a><br  />
+                                                    <a href="products.html" class="category">World once</a>
+                                                    <p class="price">$25.60</p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="item">
+                                        <ul class="thumbnails">
+                                            <li class="span3">
+                                                <div class="product-box">
+                                                    <p><a href="product_detail.html"><img src="themes/images/cloth/bootstrap-women-ware4.jpg" alt="" /></a></p>
+                                                    <a href="product_detail.html" class="title">Know exactly</a><br  />
+                                                    <a href="products.html" class="category">Quis nostrud</a>
+                                                    <p class="price">$45.50</p>
+                                                </div>
+                                            </li>
+                                            <li class="span3">
+                                                <div class="product-box">
+                                                    <p><a href="product_detail.html"><img src="themes/images/cloth/bootstrap-women-ware3.jpg" alt="" /></a></p>
+                                                    <a href="product_detail.html" class="title">Ut wisi enim ad</a><br  />
+                                                    <a href="products.html" class="category">Commodo consequat</a>
+                                                    <p class="price">$33.50</p>
+                                                </div>
+                                            </li>
+                                            <li class="span3">
+                                                <div class="product-box">
+                                                    <p><a href="product_detail.html"><img src="themes/images/cloth/bootstrap-women-ware2.jpg" alt="" /></a></p>
+                                                    <a href="product_detail.html" class="title">You think water</a><br  />
+                                                    <a href="products.html" class="category">World once</a>
+                                                    <p class="price">$45.30</p>
+                                                </div>
+                                            </li>
+                                            <li class="span3">
+                                                <div class="product-box">
+                                                    <p><a href="product_detail.html"><img src="themes/images/cloth/bootstrap-women-ware1.jpg" alt="" /></a></p>
+                                                    <a href="product_detail.html" class="title">Quis nostrud exerci</a><br  />
+                                                    <a href="products.html" class="category">Quis nostrud</a>
+                                                    <p class="price">$25.20</p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row feature_box">
+                        <div class="span4">
+                            <div class="service">
+                                <div class="responsive">
+                                    <img src="themes/images/feature_img_2.png" alt="" />
+                                    <h4>MODERN <strong>DESIGN</strong></h4>
+                                    <p>Lorem Ipsum is simply dummy text of the printing and printing industry unknown printer.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="span4">
+                            <div class="service">
+                                <div class="customize">
+                                    <img src="themes/images/feature_img_1.png" alt="" />
+                                    <h4>FREE <strong>SHIPPING</strong></h4>
+                                    <p>Lorem Ipsum is simply dummy text of the printing and printing industry unknown printer.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="span4">
+                            <div class="service">
+                                <div class="support">
+                                    <img src="themes/images/feature_img_3.png" alt="" />
+                                    <h4>24/7 LIVE <strong>SUPPORT</strong></h4>
+                                    <p>Lorem Ipsum is simply dummy text of the printing and printing industry unknown printer.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            Trang : @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)of @Model.PageCount
+            @*@Html.PagedListPager(Model, page => Url.Action("TrangChu",
+            new { page}));*@
+
+        </section>
+<section class="our_client">
+            <h4 class="title"><span class="text">Manufactures</span></h4>
+            <div class="row">
+                <div class="span2">
+                    <a href="#"><img alt="" src="themes/images/clients/14.png"></a>
+                </div>
+                <div class="span2">
+                    <a href="#"><img alt="" src="themes/images/clients/35.png"></a>
+                </div>
+                <div class="span2">
+                    <a href="#"><img alt="" src="themes/images/clients/1.png"></a>
+                </div>
+                <div class="span2">
+                    <a href="#"><img alt="" src="themes/images/clients/2.png"></a>
+                </div>
+                <div class="span2">
+                    <a href="#"><img alt="" src="themes/images/clients/3.png"></a>
+                </div>
+                <div class="span2">
+                    <a href="#"><img alt="" src="themes/images/clients/4.png"></a>
+                </div>
+            </div>
+        </section>
+       
+       
+    </div>
+    <script src="themes/js/common.js"></script>
+    <script src="themes/js/jquery.flexslider-min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,291 @@
+﻿@using WebBanSach.ModelGhep
+@model IEnumerable<WebBanSach.ModelGhep.Thongke>
+
+@{
+    
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+
+    var a = ViewBag.Bieudo;
+     DateTime start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            DateTime end = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+            var res = Enumerable
+                .Range(0, 1 + (end - start).Days)
+                .Select(x => start.AddDays(x))
+                .GroupJoin(Model,
+                    dt => dt, o => o.hoaDon.NgayMua.Date,
+
+                    (dt, orders) => new OrderDateSummary { Date = dt, Total = orders.Sum(c => c.hoaDon.TongTien) }).ToList();
+   
+
+}
+@{
+
+    var XLabels = Newtonsoft.Json.JsonConvert.SerializeObject(@res.Select(c=>c.Date.Day));
+
+
+    var YValues = Newtonsoft.Json.JsonConvert.SerializeObject(@res.Select(c=>c.Total));
+
+    ViewData["Title"] = "Line Chart";
+}
+
+<h3>Thống kê</h3>
+
+
+
+<div class="container my-5">
+
+    <hr class="my-5" style="background-color: hsl(0, 0%, 65%)" />
+    <div class="row my-3">
+
+
+        <form class="col-4 row offset-5" asp-controller="ThongKe" asp-action="Index">
+            <div class="col-5">
+                <input class="form-control" type="date" name="timerangefrom" />
+            </div>
+            <div class="col-5">
+                <input class="form-control" type="date" name="rimerangeto" />
+            </div>
+            <div class="col-2">
+                <button type="submit" class="btn btn-primary">Lọc</button>
+            </div>
+        </form>
+        <div class="col-2 row">
+            <form class="col-4" asp-controller="ThongKe">
+                <button class="btn btn-primary" asp-action="Index" type="submit" name="theongay" value="ok">Ngày</button>
+            </form>
+            <form class="col-4" asp-controller="NhapKho">
+                <button class="btn btn-primary " asp-action="Index" value="ok" name="theothang" type="submit">Tháng</button>
+            </form>
+            <form class="col-4" asp-controller="NhapKho">
+                <button class="btn btn-primary " asp-action="Index" value="ok" name="theonam" type="submit">Năm</button>
+            </form>
+
+        </div>
+
+    </div>
+    <div class="row gx-lg-5">
+        <div class="col-md-3 mb-4">
+            <label>
+                <input id="radioDefault1"
+                       type="radio"
+                       name="defaultGroup"
+                       class="card-input-element" />
+
+                <div class="card card-input">
+                    <div class="card-body">
+                        <p class="text-uppercase fw-bold text-muted">Doanh thu</p>
+                        <p class="h2 fw-bold">@String.Format("{0:#,##0.##}",@Model.Sum(c=>c.hoaDon.TongTien) ) đ</p>
+
+                    </div>
+                </div>
+            </label>
+        </div>
+        <div class="col-md-3 mb-4">
+            <label>
+                <input id="radioDefault2"
+                       type="radio"
+                       name="defaultGroup"
+                       class="card-input-element"
+                       checked />
+
+                <div class="card card-input">
+                    <div class="card-body">
+                        <p class="text-uppercase fw-bold text-muted">Số đơn hàng</p>
+                        <p class="h2 fw-bold">@Model.Select(c=>c.hoaDon).Count()   </p>
+
+                    </div>
+                </div>
+            </label>
+        </div>
+        <div class="col-md-3 mb-4">
+            <label>
+                <input id="radioDefault3"
+                       type="radio"
+                       name="defaultGroup"
+                       class="card-input-element" />
+
+                <div class="card card-input">
+                    <div class="card-body">
+                        <p class="text-uppercase fw-bold text-muted">Sản phẩm bán</p>
+                        <p class="h2 fw-bold">@String.Format("{0:#,##0.##}",@Model.Sum(c=>c.hoaDonCT.SoLuong)) </p>
+
+                    </div>
+                </div>
+            </label>
+        </div>
+        <div class="col-md-3 mb-4">
+            <label>
+                <input id="radioDefault4"
+                       type="radio"
+                       name="defaultGroup"
+                       class="card-input-element" />
+
+                <div class="card card-input">
+                    <div class="card-body">
+                        <p class="text-uppercase fw-bold text-muted">Tiền giảm giá</p>
+                        <p class="h2 fw-bold">N/A</p>
+
+                    </div>
+                </div>
+            </label>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <h6 align="center">Biểu đồ doanh thu các ngày trong tháng</h6>
+            <div class="box-body">
+
+                <div class="chart-container">
+                    <canvas id="chart" style="width:100%; height:500px"></canvas>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+        <div>
+            <li class="nav-item dropdown  btn">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                   Xuất Excel
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a asp-area="" asp-controller="ThongKe" asp-action="closedExday" class="dropdown-item" >Ngày </a></li>
+                    <li><a asp-area="" asp-controller="ThongKe" asp-action="closedExmonth" class="dropdown-item" >Tháng</a></li>
+                    <li><a asp-area="" asp-controller="ThongKe" asp-action="closedExyer" class="dropdown-item" >Năm</a></li>
+                     <li><a asp-area="" asp-controller="ThongKe" asp-action="closedEx" class="dropdown-item">Tổng</a></li>
+                </ul>
+            </li>
+        </div>
+
+
+    @*  <p style="text-align : center ; font-size : 18px; color : red">Hôm nay</p>*@
+    <table class="table">
+
+        <thead>
+            <tr>
+                <th>
+                    Tên Khách Hàng
+                </th>
+                <th>
+                    Ngày bán
+                </th>
+                <th>
+                    Tổng tiền
+                </th>
+                <th>
+                    Giảm giá
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Where(c => c.hoaDon.TrangThai == 1))
+            {
+                <tr>
+                    <td>
+
+                        @Html.DisplayFor(modelItem => item.khachHang.HoVaTen)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.hoaDon.NgayMua)
+                    </td>
+                    <td>
+                        @String.Format("{0:#,##0.##}",    @item.hoaDon.TongTien ) đ
+                    </td>
+                    <td>
+                        N/A
+                    </td>
+
+                    <td>
+                        <a asp-controller="ThongKe" asp-action="Detail" asp-route-Id="@item.hoaDon.ID_HoaDon"> Detail </a>
+                    </td>
+
+
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+    $(function line() {
+        var chartName = "chart";
+        var ctx = document.getElementById(chartName).getContext('2d');
+        var data = {
+            labels: @Html.Raw(XLabels),
+            datasets: [{
+                label: "Thống kê",
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 0, 0)',
+                    'rgba(0, 255, 0)',
+                    'rgba(0, 0, 255)',
+                    'rgba(192, 192, 192)',
+                    'rgba(255, 255, 0)',
+                    'rgba(255, 0, 255)'
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)',
+                    'rgba(255, 0, 0)',
+                    'rgba(0, 255, 0)',
+                    'rgba(0, 0, 255)',
+                    'rgba(192, 192, 192)',
+                    'rgba(255, 255, 0)',
+                    'rgba(255, 0, 255)'
+                ],
+                borderWidth: 1,
+                data: @Html.Raw(YValues)
+                    }]
+        };
+
+        var options = {
+            maintainAspectRatio: false,
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        min: 0,
+                        beginAtZero: true
+                    },
+                    gridLines: {
+                        display: true,
+                        color: "rgba(255,99,164,0.2)"
+                    }
+                }],
+                xAxes: [{
+                    ticks: {
+                        min: 0,
+                        beginAtZero: true
+                    },
+                    gridLines: {
+                        display: false
+                    }
+                }]
+            }
+        };
+
+        var myChart = new Chart(ctx, {
+            options: options,
+            data: data,
+            type: 'line'
+
+        });
+    });
+</script>
+

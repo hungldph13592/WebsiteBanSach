@@ -1,0 +1,80 @@
+﻿@model WebBanSach.Models.NhanVien
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Chi tiết nhân viên</h1>
+
+<div>
+    
+    <hr />
+
+    <dl class="row">
+        <dl class="col-6">
+            <dt class = "col-sm-4">
+               <h5>Họ và tên</h5>
+            </dt>
+            <dd class = "col-sm-8">
+                @Html.DisplayFor(model => model.HoVaTen)
+            </dd>
+            <dt class = "col-sm-4">
+               <h5>Email</h5>
+            </dt>
+            <dd class = "col-sm-8">
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+            <dt class = "col-sm-4">
+               <h5>Số điện thoại</h5>
+            </dt>
+            <dd class = "col-sm-8">
+                @Html.DisplayFor(model => model.SDT)
+            </dd>
+            <dt class = "col-sm-4">
+               <h5>Địa chỉ</h5>
+            </dt>
+            <dd class = "col-sm-8">
+                @Html.DisplayFor(model => model.DiaChi)
+            </dd>
+            
+            
+            <dt class = "col-sm-4">
+                <h5>Ngày sinh</h5>
+            </dt>
+            <dd class = "col-sm-8">
+                @Html.DisplayFor(model => model.NgaySinh)
+            </dd>
+            <dt class = "col-sm-4">
+                <h5>Quyền</h5>
+            </dt>
+            <dd class = "col-sm-8">
+                @Html.DisplayFor(model => model.Quyen)
+            </dd>
+            <dt class = "col-sm-4">
+               <h5>Trạng thái</h5>
+            </dt>
+            <dd class = "col-sm-8">
+                
+                @if (@Model.TrangThai == 1)
+                {
+                    <h6>Hoạt Động</h6>
+                    
+                }
+                else{
+                
+                    <h6>Không Hoạt Động</h6>
+                }
+
+                
+               
+            </dd>
+        </dl>
+        <dl class="col-6"><dd class = "col-sm-10">
+                <img src="~/images/Nhanviens/@Model.HinhAnh" class="card-img-top" alt=" @Html.DisplayFor(model => model.HoVaTen)">
+            </dd></dl>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.ID_NhanVien">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

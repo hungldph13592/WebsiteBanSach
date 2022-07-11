@@ -1,0 +1,79 @@
+﻿@model IEnumerable<WebBanSach.ModelGhep.SanPhamview>
+@{
+    ViewData["Title"] = "chuanhap";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .phantop{
+        background-color : dodgerblue;
+        color : white;
+       padding : 12px;
+       text-align : center;
+       margin : 20px;
+      
+       border-radius : 10px
+    }
+</style>
+<h1>chuanhap</h1>
+<div class="container">
+        <div class="row">
+             <form class="row  col-6" asp-controller="NhapKho" asp-action="chuanhap">
+                    <div class="col-8">
+                        <input name="nxb" type="text" class="form-control " placeholder="Nhập Tên truyện">
+                    </div>
+                    <div class="col-4">
+                        <button class="btn btn-primary " type="submit">Tim kiếm</button>
+                    </div>
+                </form>
+        </div>
+        <table class="table">
+                <thead>
+                    <tr>
+                   
+                        <th>
+                            Tên Truyện
+                        </th>    
+                        <th>
+                            Giá nhập
+                        </th>
+                         <th>
+                            Giá bán
+                        </th>
+                        <th>
+                           Số Lượng chưa nhập kho
+                        </th>
+                        <th>
+                            Xác Nhận Nhập kho
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Where(c=>c.kho.TrangThai==0))
+                    {
+                        <tr>
+                      
+                            <td>
+                                @Html.DisplayFor(modelItem => item.sach.TenSach)
+                            </td>
+                            <td>
+                                @String.Format("{0:#,##0.##}" ,@item.kho.GiaNhap ) đ
+                            </td>
+                                                        <td>
+                                @String.Format("{0:#,##0.##}" ,@item.sach.Gia ) đ
+                            </td>
+                            <td>
+                                 @item.sach.SoLuong 
+                            </td>
+                            <td>
+                                  <a class="btn btn-primary" asp-controller="NhapKho" asp-action="xacnhannhap" asp-route-id="@item.kho.ID_Kho">Xác Nhận</a>
+                    
+                            </td>
+
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+    </div>
+

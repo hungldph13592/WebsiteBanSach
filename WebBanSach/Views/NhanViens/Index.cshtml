@@ -1,0 +1,102 @@
+﻿@model IEnumerable<WebBanSach.Models.NhanVien>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Danh sách nhân viên</h1>
+
+<p>
+    <a asp-action="Create">Thêm Nhân viên</a>
+</p>
+<form asp-controller="NhanViens" asp-action="Index" method="post">
+     <p>
+        Tìm kiếm: <input  type="text" name="SearchString" />
+        <input type="submit" value="Tìm" class="btn btn-primary"/>
+   @* </p>
+     <p>*@
+        Ngày bắt đầu : <input  type="date" name="star" />
+        Ngày kết thúc :<input   type="date" name="end" />
+        <input type="submit" value="TÌM"  class="btn btn-primary" />
+    </p>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+               
+                <h4>Họ và tên</h4>
+            </th>
+            <th>
+                
+                 <h4>Email</h4>
+            </th>
+            <th>
+             
+                 <h4>Số điện thoại</h4>
+            </th>
+            <th>
+               
+                 <h4>Địa chỉ</h4>
+            </th>
+            <th>
+               
+                 <h4>Hình ảnh</h4>
+            </th>
+            <th>
+               
+                 <h4>Ngày sinh</h4>
+            </th>
+           
+         
+            <th>
+                
+                 <h4>Trạng thái</h4>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.HoVaTen)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SDT)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DiaChi)
+            </td>
+            <td>
+                 <img src="~/images/Nhanviens/@item.HinhAnh" style="width:150px;height:150px" alt="@item.HoVaTen">
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgaySinh)
+            </td>
+           
+            
+            <td>
+                @if (@item.TrangThai == 1)
+                {
+                    <h6>Hoạt Động</h6>
+                    
+                }
+                else{
+                
+                    <h6>Không Hoạt Động</h6>
+                }
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ID_NhanVien">Sửa</a> |
+                <a asp-action="Details" asp-route-id="@item.ID_NhanVien">Chi tiết </a> |
+                <a asp-action="Delete" asp-route-id="@item.ID_NhanVien">Xóa</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

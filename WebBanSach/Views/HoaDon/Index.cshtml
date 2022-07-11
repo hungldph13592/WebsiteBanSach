@@ -1,0 +1,135 @@
+﻿@model IEnumerable<WebBanSach.ModelView.ViewHoaDon>
+@{
+    ViewData["Title"] = "Index";
+   
+}
+<h1>Danh sách hóa đơn</h1>
+<a asp-action="HoaDonCT">Hóa đơn chi tiết</a>
+<form asp-controller="HoaDon" asp-action="Index" method="post">
+    <p>
+        Tìm kiếm: <input  type="text" name="SearchString" />
+        <input type="submit" value="Tìm" class="btn btn-primary"/>
+   @* </p>
+     <p>*@
+        Ngày bắt đầu : <input  type="date" name="star" />
+        Ngày kết thúc :<input   type="date" name="end" />
+        <input type="submit" value="TÌM"  class="btn btn-primary" />
+    </p>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Tên Khách Hàng 
+            </th>
+            <th>
+                Tên Sản Phẩm
+            </th>
+             <th>
+              Ảnh
+            </th>
+            <th>
+               Số Lượng
+            </th>
+            <th>
+               Tổng Tiền
+            </th>
+            <th>
+                Ngày mua
+            </th>        
+            <th>
+               Đơn Gía
+            </th>
+            <th>Trạng thái </th>
+            <th>Sửa trạng thái </th>
+        </tr>
+    </thead>
+    <tbody>
+ 
+@foreach (var item in Model) {
+     var coler = "black";
+            @if (item.hoaDon.TrangThai == 1)
+                {
+                coler = "black";
+
+            }
+            else if(item.hoaDon.TrangThai == 0)
+            {
+
+                coler = "green";
+            }
+            else
+            {
+                coler = "red";
+
+                    }
+        <tr>
+            <td>
+                 <font color="@coler">
+                        @Html.DisplayFor(modelItem => item.khachHang.HoVaTen )
+                    </font>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.sach.TenSach)               
+            </td>
+            <td>
+               <img src="~/img/@item.sach.HinhAnh" style="width:150px;height:150px"/>             
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.hoaDonCT.SoLuong)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.hoaDon.TongTien)
+            </td>
+             <td>
+                @Html.DisplayFor(modelItem => item.hoaDon.NgayMua)
+            </td>
+              <td>
+                @Html.DisplayFor(modelItem => item.sach.Gia)
+            </td>
+             <td>
+                @if (item.hoaDon.TrangThai == 1)
+                {
+                        <h6>Đang giao</h6>
+           
+                   }
+                    else if(item.hoaDon.TrangThai == 0)
+                    {
+
+                        <h6>Chưa thanh toán</h6>
+                    }
+                    else
+                    {
+                        <h6>Đã giao</h6>
+                    }
+            </td>
+             <td>
+                <form asp-controller="HoaDon" asp-action="Sua" method="post">
+                        
+                                      @* <input name="dd" type="hidden" value=" @item.hoaDon.ID_HoaDon">*@
+                                    <p>
+                                        <select type="hidden"  name="dd" >
+              
+                                          <option  value="@item.hoaDon.ID_HoaDon"></option>
+                                          
+                                    </select>
+                                      
+                                        
+                                      <select class="form-select" name="name" aria-label="Default select example">
+              
+                                          <option  value="1">Đang giao</option>
+                                          <option value="2">Chưa thanh toán</option>
+                                          <option value="3">Đã giao</option>
+                                    </select>
+                                
+                                    <button type="submit"  class="btn btn-primary">Save </button>
+                                </p>
+                                
+                </form>
+
+            </td>
+           
+        </tr>
+}
+    </tbody>
+</table>

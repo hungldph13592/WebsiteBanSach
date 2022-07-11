@@ -1,0 +1,57 @@
+﻿<link rel="stylesheet" href="~/css/login.css" />
+@model WebBanSach.Models.Extend.UserLogin
+@{
+    string header;
+    if (ViewBag.nv)
+    {
+        header = "Nhân viên";
+    }
+    else
+    {
+        header = "Khách hàng";
+    }
+}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3 col-md-2"></div>
+        <div class="col-lg-6 col-md-8 login-box">
+            <div class="col-lg-12 login-key">
+                <i class="fa fa-key" aria-hidden="true"></i>
+            </div>
+            <div class="col-lg-12 login-title">
+                @header.ToUpper()
+            </div>
+
+            <div class="col-lg-12 login-form">
+                <div class="col-lg-12 login-form">
+                    <form asp-controller="Login" asp-action="Login" asp-route-nv="@ViewBag.nv">
+                        <div asp-validation-summary="All" style="color:red"></div>
+                        <div class="form-group">
+                            <label asp-for="User" class="form-control-label">USERNAME</label>
+                            <input asp-for="User" type="text" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Password" class="form-control-label">PASSWORD</label>
+                            <input asp-for="Password" type="password" class="form-control">
+                        </div>
+                        <div class="col-lg-12 loginbttm">
+                            <div class="col-lg-6 login-btm login-button">
+                                <button type="submit" class="btn btn-outline-primary">LOGIN</button>
+                            </div>
+                            @if (!ViewBag.nv)
+                            {
+                                <div class="col-lg-6 login-btm txt">
+                                    <div style="color:white"><a  asp-controller="User" asp-action="Dangky">Đăng kí</a></div>
+                                    <div style="color:white"><a  asp-controller="User" asp-action="ForgotPassword">Quên mật khẩu?</a></div>
+                                </div>
+                            }
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-2"></div>
+        </div>
+    </div>
+
+
+

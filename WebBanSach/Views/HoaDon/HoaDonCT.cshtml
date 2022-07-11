@@ -1,0 +1,101 @@
+﻿@model IEnumerable<WebBanSach.ModelView.ViewHoaDon>
+@{
+    ViewData["Title"] = "HoaDonCT";
+}
+
+<h1>Danh sách hóa đơn chi tiết</h1>
+<a asp-action="Index">Hóa đơn </a>
+<form asp-controller="HoaDon" asp-action="HoaDonCT" method="post">
+    <p>
+        Tìm kiếm: <input  type="text" name="SearchString" />
+        <input type="submit" value="Tìm" class="btn btn-primary"/>
+   @* </p>
+     <p>*@
+        Ngày bắt đầu : <input  type="date" name="star" />
+        Ngày kết thúc :<input   type="date" name="end" />
+        <input type="submit" value="TÌM"  class="btn btn-primary" />
+    </p>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Tên Khách Hàng 
+            </th>
+            <th>
+                Tên Sản Phẩm
+            </th>
+            <th>
+               Số Lượng
+            </th>
+            <th>
+               Tổng Tiền
+            </th>
+            <th>
+                Ngày mua
+            </th>        
+            <th>
+               Đơn Gía
+            </th>
+             <th>
+               Tác GIả
+            </th>
+             <th>
+               Thể Loại
+            </th>
+             <th>
+               Nhà Xuất Bản
+            </th>
+             <th>
+               Địa chỉ khách Hàng 
+            </th>
+             <th>
+               Số Điện thoại khách hàng
+            </th>
+            
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+ 
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.khachHang.HoVaTen)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.sach.TenSach)               
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.hoaDonCT.SoLuong)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.hoaDon.TongTien)
+            </td>
+             <td>
+                @Html.DisplayFor(modelItem => item.hoaDon.NgayMua)
+            </td>
+              <td>
+                @Html.DisplayFor(modelItem => item.sach.Gia)
+            </td>
+           
+            <td>
+                @Html.DisplayFor(modelItem => item.tacGia.HoVaTen)
+            </td>
+             <td>
+                @Html.DisplayFor(modelItem => item.TheLoai.TenTL)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.nhaXuatBan.TenXuatBan)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.khachHang.DiaChi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.khachHang.SDT)
+            </td>
+           
+        </tr>
+}
+    </tbody>
+</table>

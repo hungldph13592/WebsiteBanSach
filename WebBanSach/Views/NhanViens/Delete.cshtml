@@ -1,0 +1,79 @@
+﻿@model WebBanSach.Models.NhanVien
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Xóa nhân viên</h1>
+
+<h3>Bạn có chắc muốn xóa nhân viên này</h3>
+<div>
+    
+    <hr />
+    <dl class="row">
+       
+                      <dt class = "col-sm-2">
+                   <h4>Họ Và Tên</h4>
+                </dt>
+                <dd class = "col-sm-10">
+                    @Html.DisplayFor(model => model.HoVaTen)
+                </dd>
+                <dt class = "col-sm-2">
+                     <h4>Email</h4>
+                </dt>
+                <dd class = "col-sm-10">
+                    @Html.DisplayFor(model => model.Email)
+                </dd>
+                <dt class = "col-sm-2">
+                     <h4>Số điện thoại</h4>
+                </dt>
+                <dd class = "col-sm-10">
+                    @Html.DisplayFor(model => model.SDT)
+                </dd>
+                <dt class = "col-sm-2">
+                    <h4>Địa chỉ</h4>
+                </dt>
+                <dd class = "col-sm-10">
+                    @Html.DisplayFor(model => model.DiaChi)
+                </dd>
+                <dt class = "col-sm-2">
+                    <h4>Hình ảnh</h4>
+                </dt>
+                <dd class = "col-sm-10">
+                    @Html.DisplayFor(model => model.HinhAnh)
+                </dd>
+                <dt class = "col-sm-2">
+                    <h4>Ngày Sinh</h4>
+                </dt>
+                <dd class = "col-sm-10">
+                    @Html.DisplayFor(model => model.NgaySinh)
+                </dd>
+       
+                <dt class = "col-sm-2">
+                    <h4>Trạng thái</h4>
+                </dt>
+                <dd class = "col-sm-10">
+                     @if (@Model.TrangThai == 1)
+                        {
+                            <h6>Hoạt Động</h6>
+                    
+                        }
+                        else{
+                
+                            <h6>Không Hoạt Động</h6>
+                        }
+                </dd>
+        
+       
+    </dl>
+      
+    
+   
+    
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="ID_NhanVien" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

@@ -1,0 +1,88 @@
+﻿@model List<WebBanSach.Models.SachCT>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    List<NhaXuatBan> nhaXuatBans = ViewBag.NXB;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thể loại</title>
+    <link href="~/boostrap/bootstrap.min.css" rel="stylesheet">
+    <link href="~/boostrap/bootstrap-responsive.min.css" rel="stylesheet">
+
+    <link href="~/boostrap/bootstrappage.css" rel="stylesheet" />
+
+    <!-- global styles -->
+    <link href="~/boostrap/flexslider.css" rel="stylesheet" />
+    <link href="~/boostrap/main.css" rel="stylesheet" />
+
+    <!-- scripts -->
+    <script src="~/js/jquery-1.7.2.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/superfish.jss"></script>
+    <script src="~/js/jquery.scrolltotop.js"></script>
+    <script src="~/js/jquery.fancybox.js"></script>
+</head>
+<body>
+    <div class="container">
+        <section class="navbar main-menu">
+            <div class="navbar-inner main-menu">
+                <a href="index.html" class="logo pull-left"><img src="themes/images/logo.png" class="site_logo" alt=""></a>
+                <nav id="menu" class="pull-right">
+                    <ul>
+                        @foreach (var TL in ViewBag.TheLoai)
+                        {
+                            <li><a href="@Url.Action("TheLoai","Home",new{idTl=@TL.ID_TheLoai})">@TL.TenTL</a></li>
+                        }
+                        <li><a href="">Best Seller</a></li>
+                        <li><a href="">Top Seller</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </section>
+        <section class="homepage-slider" id="home-slider">
+            <div class="flexslider">
+                <ul class="slides">
+                    <li>
+                        <img src="~/img/bannerbook.jpg" alt="" />
+                    </li>
+                    <li>
+                        <img src="~/img/baner2.jpg" alt="" />
+                        <div class="intro">
+                            <h1>Mid season sale</h1>
+                            <p><span>Up to 50% Off</span></p>
+                            <p><span>On selected items online and in stores</span></p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+        <section class="header_text">
+            We stand for top quality templates. Our genuine developers always optimized bootstrap commercial templates.
+            <br />Don't miss to use our cheap abd best bootstrap templates.
+        </section>
+        <div class="active item">
+            <ul class="thumbnails">
+                @foreach (var item in ViewBag.SachTL)
+                {
+                    <li class="span3">
+                        <div class="product-box">
+                            <span class="sale_tag"></span>
+                            <div class="product_title"><a href="#">@item.TenSach</a></div>
+                            <p><a href="@Url.Action("DetailBook","Home",new{id=@item.ID_Sach})"><img class="img-book" src="~/img/@item.HinhAnh" alt="" /></a></p>
+                            <a href="@Url.Action("DetailBook","Home",new{id=@item.ID_Sach})" class="category">@item.TenSach (NXB: @nhaXuatBans.FirstOrDefault(c=>c.ID_NXB==@item.MaNXB).TenXuatBan - Tái bản: @item.TaiBan)</a>
+                            <p class="price">@item.Gia :VNĐ</p>
+                        </div>
+                    </li>
+                }
+
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

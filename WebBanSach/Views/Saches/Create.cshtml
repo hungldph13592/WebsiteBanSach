@@ -1,0 +1,105 @@
+﻿@model WebBanSach.Models.Sach
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Sach</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <span class="text-danger">@Html.ValidationMessage("Error")</span>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="TenSach" class="control-label"></label>
+                <input asp-for="TenSach" class="form-control" />
+                <span asp-validation-for="TenSach" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaNXB" class="control-label"></label>
+                <select asp-for="MaNXB" class="form-control" asp-items="ViewBag.IDNXB"></select>
+            </div>
+            <div class="form-group">
+                <input type="file" asp-for="HinhAnh" accept=".jpg, .png, .jpeg, .gif, .jfif, .bmp, .tif, .tiff|image/*" />
+            </div>
+            <div class="form-group">
+                <label asp-for="SoTrang" class="control-label"></label>
+                <input asp-for="SoTrang" class="form-control" />
+                <span asp-validation-for="SoTrang" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TaiBan" class="control-label"></label>
+                <input asp-for="TaiBan" class="form-control" />
+                <span asp-validation-for="TaiBan" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SoLuong" class="control-label"></label>
+                <input asp-for="SoLuong" class="form-control" />
+                <span asp-validation-for="SoLuong" class="text-danger"></span>
+            </div>
+            @*cường code*@
+            <div class="form-group">
+                <label  class="control-label"> Giá Nhập</label>
+                <input name="gianhap" class="form-control" />
+                <span  class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Gia" class="control-label"></label>
+                <input asp-for="Gia" class="form-control" />
+                <span asp-validation-for="Gia" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label"> Tác Giả</label>
+                <select id="dropDownList-example" name="SelectedIdsTG"
+                        asp-items="@ViewBag.IDTG" multiple class="form-control">
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="control-label"> Thể Loại</label>
+                <select id="dropDownList-example2" name="SelectedIdsTL"
+                        asp-items="@ViewBag.IDTL" multiple class="form-control">
+                </select>
+            </div>
+            <span></span>
+            <span></span>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<style>
+
+    .control-wrapper {
+        margin: 0 auto;
+        width: 250px;
+    }
+
+    #submitbutton {
+        margin: 10px auto;
+        text-align: center;
+    }
+
+    #errorMessage {
+        color: red;
+        text-align: center
+    }
+</style>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    <script>
+        $(function() {
+            $("#dropDownList-example").chosen();
+            $("#dropDownList-example2").chosen();
+        });
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

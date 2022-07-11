@@ -1,0 +1,105 @@
+﻿@{
+    ViewData["Title"] = "Dangky";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container bg-light">
+<table align="center" class="bg-light">
+    <h1 class="text-center text-primary bg-light">Đăng Ký Tài Khoản</h1>
+
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary(true)
+
+        <tr>
+            <td>
+                Tên đăng nhập:
+            </td>
+            <td>
+                @Html.TextBox("TenDN")
+                @ViewData["Loi2"]
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                Mật khẩu:
+            </td>
+            <td>
+                @Html.TextBox("Matkhau")
+                @ViewData["Loi3"]
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                Nhập lại mạt khẩu:
+            </td>
+            <td>
+                @Html.TextBox("Matkhaunhaplai")
+                @ViewData["Loi4"]
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                Email:
+            </td>
+            <td>
+                @Html.TextBox("Email")
+                  <p class="text-danger">
+                @ViewData["Loi5"]
+                @ViewData["Loi10"]
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                SDT:
+            </td>
+            <td>
+                @Html.TextBox("Dienthoai")
+              
+                @ViewData["Loi6"]
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                Địa chỉ:
+            </td>
+            <td>
+                @Html.TextBox("Diachi")
+                @ViewData["Loi7"]
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                Trạng thái:
+            </td>
+            <td>
+                @Html.TextBox("Trangthai")
+                @ViewData["Loi8"]
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                Ngày sinh:
+            </td>
+            <td>
+                <input type="date" name="Ngaysinh"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                
+            </td>
+            <td>
+                <input type="submit" value="Đăng ký"/>
+            </td>
+        </tr>
+    }
+</table>
+</div>

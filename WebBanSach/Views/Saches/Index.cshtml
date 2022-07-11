@@ -1,0 +1,77 @@
+﻿@model IEnumerable<WebBanSach.Models.Sach>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Tên sách
+            </th>
+            <th>
+                Hình ảnh
+            </th>
+            <th>
+                Số trang
+            </th>
+            <th>
+                Tái bản
+            </th>
+            <th>
+                Ngày nhập
+            </th>
+            <th>
+                Số lượng
+            </th>
+            <th>
+                Trạng thái
+            </th>
+            <th>
+                Nhà xuất bản
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenSach)
+            </td>
+            <td>
+                <img src="~/img/@item.HinhAnh" style="width:150px;height:150px"/>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SoTrang)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TaiBan)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayNhap)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SoLuong)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TrangThai)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NhaXuatBan.TenXuatBan)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ID_Sach">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ID_Sach">Details</a> |
+@*                <a asp-action="Delete" asp-route-id="@item.ID_Sach">Delete</a>*@
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

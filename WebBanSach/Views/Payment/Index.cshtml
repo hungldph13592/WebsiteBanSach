@@ -1,0 +1,174 @@
+﻿@using Microsoft.AspNetCore.Http
+@using WebBanSach.Helpers
+
+
+@{
+    KhachHang khachHang = ViewBag.NguoiDung;
+    List<GioHang> gioHangs = ViewBag.Carts;
+   
+  
+}
+
+<div class="container">
+
+    <div class="py-5 text-center">
+     
+      <h2>Thông tin đơn hàng </h2>
+    </div>
+
+    <div class="row g-5">
+      <div class="col-md-5 col-lg-4 order-md-last">
+        <h4 class="d-flex justify-content-between align-items-center mb-3">
+          <span class="text-primary">Giỏ hàng </span>
+          <span class="badge bg-primary rounded-pill">
+
+                @{ var data = Context.Session.Get<List<GioHang>>("giohang");
+
+                                        }
+
+
+                                    @data.Count()
+
+
+
+                    
+                    
+
+          </span>
+        </h4>
+        <ul class="list-group mb-3">
+             <li class="list-group-item d-flex justify-content-between lh-sm">
+            <div>
+              <h8 class="my-0">Tên sản phẩm </h8>
+            
+            </div>
+           
+            <div> <h8 class="my-0">Đơn giá </h8></div>
+
+              </li>
+             @foreach (var item in gioHangs)
+              {
+
+
+              <li class="list-group-item d-flex justify-content-between lh-sm">
+             
+
+             
+            
+                        
+           
+            
+              
+            <div>
+              <h9 class="my-0">@item.TenSanPham</h9>
+              <small class="text-muted">số lượng : @item.SoLuong</small>
+            </div>
+            <span class="text-muted">@item.DonGia.ToString("#,##0").Replace(',', '.') VNĐ</span>
+            
+          </li>
+               }       
+         
+          <li class="list-group-item d-flex justify-content-between">
+            <span>Tổng tiền</span>
+            <strong>@ViewBag.TongTien.ToString("#,##0").Replace(',', '.') VNĐ</strong>
+          </li>
+        
+        </ul>
+      </div>
+      <div class="col-md-7 col-lg-8">
+        <h4 class="mb-3">Địa chỉ thanh toán</h4>
+        <form class="needs-validation" asp-action="PaymentBook" asp-controller="Payment" method="post" novalidate>
+          <div class="row g-3">
+
+            <div class="col-12">
+              <label for="username" class="form-label">Họ và tên</label>
+              <div class="input-group has-validation">
+                <span class="input-group-text"></span>
+                <input type="text" class="form-control" id="username"value="@khachHang.HoVaTen"readonly >
+              <div class="invalid-feedback">
+                  Vui lòng nhập họ tên
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12">
+               <label for="cc-number" class="form-label">Số điện thoại</label>
+              <input type="text" class="form-control" id="cc-number"  value="@khachHang.SDT"readonly>
+              <div class="invalid-feedback">
+                Vui lòng nhập số điện thoại
+              </div>
+            </div>
+
+            <div class="col-12">
+              <label for="address" class="form-label">Address</label>
+              <input type="text" class="form-control" id="address"value="@khachHang.DiaChi" readonly>
+              <div class="invalid-feedback">
+                 Vui lòng nhập địa chỉ
+              </div>
+            </div>                           
+
+            </div>
+            
+            <hr />
+          <button class="w-100 btn btn-primary btn-lg" type="submit"> Đặt hàng</button>
+        </form>
+      </div>
+
+
+  </div>
+  </div>
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      .media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
+    
+    <!-- Custom styles for this template -->
+    <link href="~/css/form-validation.css" rel="stylesheet">
+
+
+ <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/checkout/">
+   <script src="~/js/form-validation.js"></script>
+ 
+
+            
+            
+@*    <form asp-action="PaymentBook" asp-controller="Payment" method="post">
+                <!-- 2 column grid layout with text inputs for the first and last names -->
+
+           
+            <!-- Text input -->
+            <div class="form-outline mb-4">
+                <label class="form-label" for="form6Example3">Họ Tên</label>
+                <input type="text" id="form6Example3" name="hoten" value="@khachHang.HoVaTen" readonly class="form-control" />
+
+            </div>
+
+            <!-- Text input -->
+            <div class="form-outline mb-4">
+                <label class="form-label" for="form6Example4">Địa chỉ</label>
+                <input type="text" id="form6Example4" name="diachi" value="@khachHang.DiaChi" readonly class="form-control" />
+
+            </div>
+
+            <div class="form-outline mb-4">
+                <label class="form-label" for="form6Example6">Số điện thoại</label>
+                <input type="number" id="form6Example6" name="sdt" value="@khachHang.SDT" readonly class="form-control" />
+
+            </div>
+          
+            <input type="submit" name="submit" class="btn-success" />
+
+        </form>*@

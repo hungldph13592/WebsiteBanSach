@@ -1,0 +1,116 @@
+﻿@model IEnumerable<WebBanSach.ModelGhep.SanPhamview>
+
+
+@{
+    ViewData["Title"] = "NhapKho";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .phantop{
+        background-color : dodgerblue;
+        color : white;
+       padding : 12px;
+       text-align : center;
+       margin : 20px;
+      
+       border-radius : 10px
+    }
+</style>
+
+
+<div class="container ">
+            <div class="row">
+                <form class="row  col-6" asp-controller="NhapKho" asp-action="timkiem" >
+                    <div  class="col-8">
+                        <input asp-action="Index" name="nxb" type="text" class="form-control " placeholder="Nhập Tên truyện">
+                    </div>
+                    <div class="col-4">
+                        <button class="btn btn-primary " asp-action="nhapkho">Tim kiếm</button>
+                    </div>
+
+                </form>
+@*
+                <form class="col-4 row" asp-controller="NhapKho" asp-action="nhapkho">
+                    <div class="col-5">
+                        <input class="form-control" type="date" name="timerangefrom" />
+                    </div>
+                    <div class="col-5">
+                        <input class="form-control" type="date" name="rimerangeto" />
+                    </div>
+                    <div class="col-2">
+                       <button type="submit" class="btn btn-primary">Lọc</button>
+                    </div>
+                </form>*@
+                @*<div class="col-2 row">
+                   <form class="col-4" asp-controller="NhapKho">
+                       <button class="btn btn-primary" asp-action="nhapkho" type="submit" name="theongay" value="ok">Ngày</button>
+                   </form>
+                    <form class="col-4" asp-controller="NhapKho">
+                       <button class="btn btn-primary " asp-action="nhapkho" value="ok" name="theothang" type="submit">Tháng</button>
+                   </form>
+                    <form class="col-4" asp-controller="NhapKho">
+                       <button class="btn btn-primary " asp-action="nhapkho" value="ok" name="theonam" type="submit">Năm</button>
+                   </form>
+
+                </div>*@
+            </div>
+            <h4 style="text-align: center">Nhập Kho trong tháng @DateTime.Now.Month</h4>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Tên nhà xuất bản
+                        </th>
+                        <th>
+                            Tên Truyện
+                        </th>
+                        <th>
+                            Ngày nhập
+                        </th>
+                          <th>
+                           Tái bản
+                        </th>
+                        <th>
+                            Giá
+                        </th>
+                        <th>
+                           Số Lượng 
+                        </th>
+                        <th>
+                            Tổng giá
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Where(c=>c.kho.TrangThai==1))
+                    {
+                        <tr>
+                            <td>
+
+                                @Html.DisplayFor(modelItem => item.nhaXuatBan.TenXuatBan)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.sach.TenSach)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.kho.NgayNhap )
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.sach.TaiBan )
+                            </td>
+                            <td>
+                              @String.Format("{0:#,##0.##}", item.kho.GiaNhap )  đ
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.kho.SoLuong )
+                            </td>
+                            <td>
+                                  @String.Format("{0:#,##0.##}", (   @item.kho.SoLuong * @item.kho.GiaNhap)) đ
+                            </td>
+
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>

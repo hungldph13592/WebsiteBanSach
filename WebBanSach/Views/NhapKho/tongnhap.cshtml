@@ -1,0 +1,145 @@
+﻿@model IEnumerable<WebBanSach.ModelGhep.SanPhamview>
+@{
+    ViewData["Title"] = "tongnhap";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .phantop {
+        background-color: dodgerblue;
+        color: white;
+        padding: 12px;
+        text-align: center;
+        margin: 20px;
+        border-radius: 10px
+    }
+</style>
+<div class="container my-5">
+  <p class="h4">Tổng nhập</p>
+  <hr class="my-5" style="background-color: hsl(0, 0%, 65%)" />
+  <div class="row gx-lg-5">
+    <div class="col-md-6 mb-4">
+      <label>
+        <input
+               id="radioDefault3"
+               type="radio"
+               name="defaultGroup"
+               class="card-input-element"
+               />
+
+        <div class="card card-input">
+          <div class="card-body">
+            <p class="text-uppercase fw-bold text-muted">Tổng Vốn</p>
+            <p class="h2 fw-bold">@String.Format("{0:#,##0.##}",@Model.Sum(c=>c.kho.GiaNhap) * @Model.Sum(c=>c.kho.SoLuong) ) đ</p>
+            <p class="mb-0"></p>
+          </div>
+        </div>
+      </label>
+    </div>
+    <div class="col-md-6 mb-4">
+      <label>
+        <input
+               id="radioDefault4"
+               type="radio"
+               name="defaultGroup"
+               class="card-input-element"
+               />
+
+        <div class="card card-input">
+          <div class="card-body">
+            <p class="text-uppercase fw-bold text-muted"> Tổng doanh thu ước tính</p>
+            <p class="h2 fw-bold">@String.Format("{0:#,##0.##}",@Model.Sum(c=>c.sach.Gia) * @Model.Sum(c=>c.kho.SoLuong)) đ</p>
+            <p class="mb-0"></p>
+          </div>
+        </div>
+      </label>
+    </div>
+  </div>
+</div>
+
+
+<div class="container my-5">
+
+
+    <div class="row">
+        <form class="row  col-6" asp-controller="NhapKho" asp-action="tongnhap">
+            <div class="col-8">
+                <input name="nxb" type="text" class="form-control " placeholder="Nhập tên nhà sản xuất hoặc Tên truyện">
+            </div>
+            <div class="col-4">
+                <button class="btn btn-primary " type="submit">Tim kiếm</button>
+            </div>
+
+        </form>
+
+
+        <form class="col-4 row" asp-controller="NhapKho" asp-action="tongnhap">
+            <div class="col-5">
+                <input class="form-control" type="date" name="timerangefrom" />
+            </div>
+            <div class="col-5">
+                <input class="form-control" type="date" name="rimerangeto" />
+            </div>
+            <div class="col-2">
+                <button type="submit" class="btn btn-primary">Lọc</button>
+            </div>
+        </form>
+        <div class="col-2 row">
+            <form class="col-4" asp-controller="NhapKho">
+                <button class="btn btn-primary" asp-action="tongnhap" type="submit" name="theongay" value="ok">Ngày</button>
+            </form>
+            <form class="col-4" asp-controller="NhapKho">
+                <button class="btn btn-primary " asp-action="tongnhap" value="ok" name="theothang" type="submit">Tháng</button>
+            </form>
+            <form class="col-4" asp-controller="NhapKho">
+                <button class="btn btn-primary " asp-action="tongnhap" value="ok" name="theonam" type="submit">Năm</button>
+            </form>
+
+        </div>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Hình ảnh
+                </th>
+                <th>
+                    Tên Truyện
+                </th>
+                <th>
+                    Số lượng Nhập
+                </th>
+                <th>
+                    Vốn nhập kho
+                </th>
+                <th>
+                    Nhà cung cấp
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Where(c => c.kho.TrangThai != 0))
+            {
+                <tr>
+                    <td>
+                        <img width="100px" src="/Img/@item.sach.HinhAnh">
+
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.sach.TenSach)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.kho.SoLuong )
+                    </td>
+                    <td>
+                            @String.Format("{0:#,##0.##}", item.kho.GiaNhap * item.kho.SoLuong)   
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.nhaXuatBan.TenXuatBan)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

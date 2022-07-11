@@ -1,0 +1,27 @@
+﻿body {
+    margin-bottom: 60px;
+}
+
+body {
+    background-color: hsl(0, 0%, 94%)
+}
+
+label {
+    width: 100%;
+}
+
+.card-input-element {
+    display: none;
+}
+
+.card-input:hover {
+    cursor: pointer;
+    background-color: hsl(144, 60%, 95.9%);
+    -webkit-transition: 0.5s;
+    -o-transition: 0.5s;
+    transition: 0.5s;
+}
+
+.card-input-element:checked + .card-input {
+    border: 1px solid hsl(144, 100%, 35.9%);
+}

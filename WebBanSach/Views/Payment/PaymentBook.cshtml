@@ -1,0 +1,28 @@
+﻿   
+
+@section Scripts{
+    <script>
+            setTimeout(function()){
+            $(#gg).fadeOut('slow');
+        }, 2000);
+       
+    </script>
+}
+
+
+@if (@ViewBag.SuccessMessage != null)
+             {
+                <div id="gg" class="alert alert-success" role="alert">           
+                 @ViewBag.SuccessMessage
+                </div>
+                 <a class="btn-link" href="@Url.Action("TrangChu","Home")">
+                             Tiếp tục mua hàng
+                 </a>
+            }
+
+    @if (@ViewBag.MessPayError != null)
+    {
+        <div class="alert alert-warning" role="alert">
+            @ViewBag.MessPayError
+        </div>
+    }

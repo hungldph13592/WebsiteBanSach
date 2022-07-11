@@ -1,0 +1,170 @@
+﻿@model IEnumerable<WebBanSach.ModelGhep.SanPhamview>
+
+
+<style>
+    .phantop {
+        background-color: dodgerblue;
+        color: white;
+        padding: 12px;
+        text-align: center;
+        margin: 20px;
+        border-radius: 10px
+    }
+</style>
+<div class="container my-5">
+  <p class="h4">Tồn Kho</p>
+  <hr class="my-5" style="background-color: hsl(0, 0%, 65%)" />
+  <div class="row gx-lg-5">
+    <div class="col-md-3 mb-4">
+      <label>
+        <input
+               id="radioDefault1"
+               type="radio"
+               name="defaultGroup"
+               class="card-input-element"
+               />
+
+        <div class="card card-input">
+          <div class="card-body">
+            <p class="text-uppercase fw-bold text-muted">Số sản Phẩm</p>
+            <p class="h2 fw-bold">@Model.Count()</p>
+         
+          </div>
+        </div>
+      </label>
+    </div>
+    <div class="col-md-3 mb-4">
+      <label>
+        <input
+               id="radioDefault2"
+               type="radio"
+               name="defaultGroup"
+               class="card-input-element"
+               checked
+               />
+
+        <div class="card card-input">
+          <div class="card-body">
+            <p class="text-uppercase fw-bold text-muted">Số lượng kiểm kê</p>
+            <p class="h2 fw-bold">N/A</p>
+          
+          </div>
+        </div>
+      </label>
+    </div>
+    <div class="col-md-3 mb-4">
+      <label>
+        <input
+               id="radioDefault3"
+               type="radio"
+               name="defaultGroup"
+               class="card-input-element"
+               />
+
+        <div class="card card-input">
+          <div class="card-body">
+            <p class="text-uppercase fw-bold text-muted">Số lượng tồn kho</p>
+            <p class="h2 fw-bold">@Model.Sum(c=>c.sach.SoLuong)</p>
+           
+          </div>
+        </div>
+      </label>
+    </div>
+    <div class="col-md-3 mb-4">
+      <label>
+        <input
+               id="radioDefault4"
+               type="radio"
+               name="defaultGroup"
+               class="card-input-element"
+               />
+
+        <div class="card card-input">
+          <div class="card-body">
+            <p class="text-uppercase fw-bold text-muted">Giá trị tồn kho</p>
+            <p class="h2 fw-bold">@String.Format( "{0:#,##0.##}",(Model.Sum(c=>c.sach.SoLuong) * (Model.Sum(c=>c.kho.GiaNhap)/Model.Count()))) đ</p>
+          
+          </div>
+        </div>
+      </label>
+    </div>
+  </div>
+</div>
+
+
+<div class="container ">
+
+    <div class="row">
+        <form class="row  col-6" asp-controller="TonKho" asp-action="Index">
+            <div class="col-8">
+                <input name="nxb" type="text" class="form-control " placeholder="Nhập Tên truyện">
+            </div>
+            <div class="col-4">
+                <button class="btn btn-primary " type="submit">Tim kiếm</button>
+            </div>
+
+        </form>
+
+
+        <form class="col-4 row" asp-controller="TonKho" asp-action="Index">
+            <div class="col-5">
+                <input class="form-control" type="date" name="timerangefrom" />
+            </div>
+            <div class="col-5">
+                <input class="form-control" type="date" name="rimerangeto" />
+            </div>
+            <div class="col-2">
+                <button type="submit" class="btn btn-primary">Lọc</button>
+            </div>
+        </form>
+        <div class="col-2 row">
+            <form class="col-4" asp-controller="TonKho">
+                <button class="btn btn-primary" asp-action="Index" type="submit" name="theongay" value="ok">Ngày</button>
+            </form>
+            <form class="col-4" asp-controller="TonKho">
+                <button class="btn btn-primary " asp-action="Index" value="ok" name="theothang" type="submit">Tháng</button>
+            </form>
+            <form class="col-4" asp-controller="TonKho">
+                <button class="btn btn-primary " asp-action="Index" value="ok" name="theonam" type="submit">Năm</button>
+            </form>
+
+        </div>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Tên sản phẩm
+                </th>
+                <th>
+                    Số lượng kiểm kê
+                </th>
+                <th>
+                    Số lượng tồn
+                </th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Where(c=>c.kho.TrangThai==1))
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.sach.TenSach)
+
+                    </td>
+                    <td>
+                    N/A
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.sach.SoLuong )
+                    </td>
+         
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
